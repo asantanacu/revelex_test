@@ -1,0 +1,21 @@
+{
+    "name": "Revelex Demo",
+    "description": "Demo Project",
+    "keywords": ["php", "framework", "revelex"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander",
+            "email": "asantanacu@gmail.com",
+            "role": "Creator / Main Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Revelex\\": "src/"
+        }
+    }
+}
