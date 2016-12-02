@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/app.css">
     <title>Revelex</title>
+	
+	<link rel="shortcut icon" href="/img/favicon.ico">
+
 </head>
 <body>
 
