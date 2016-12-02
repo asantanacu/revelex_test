@@ -19,7 +19,7 @@ class Container implements \ArrayAccess{
             require $conf;
         }
 
-        $this['route'] = new RouteManager;
+        $this['route'] = new RouteManager($this['app.route']);
 		
         $this['view'] = new Template($this['app.view'], $this);	
 

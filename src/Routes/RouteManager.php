@@ -19,6 +19,19 @@ class RouteManager{
     
     const REGVAL = '/({:.+?})/';    
    
+    public function __construct(array $conf){
+        if(empty($conf)){
+            throw new \InvalidArgumentException(
+                'route class requires at least one runtime options'
+            );
+        }
+		
+		if(file_exists($conf['path'])){
+                $router = $this;    
+                require $conf['path']; 
+        }		
+    }   
+   
     public function any($path, $handler){
         $this->addRoute('GET', $path, $handler);
         $this->addRoute('POST', $path, $handler);
@@ -67,10 +80,8 @@ class RouteManager{
                 list($ctrl, $method) = explode('@', $handler); 
                 return ['controller' => $ctrl, 'method' => $method, 'args' => $args];
             }
-            if(empty($args)){
-                return $handler(); 
-            }
-             return call_user_func_array($handler, $args);
+			else
+				return	['handler' => $handler, 'args' => $args];
           }
      }
    

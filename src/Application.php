@@ -29,7 +29,7 @@ Class Application extends Container{
 			throw new \Exception("method $method does not exist in $controller"); 
 		}
         
-		(new $controller)->$method($args, $this);
+		$controller->$method($args, $this);
 		
     }
     public function view($block, array $variables = []){
@@ -39,7 +39,11 @@ Class Application extends Container{
     public function run(){
         $resource = $this['route']->match($_SERVER, $_POST);  
         if(is_array($resource)){
-            $this->controllerDipatcher($resource);
+			if(isset($resource['handler']))
+				call_user_func_array($resource['handler'], [$resource['args'], $this]);
+			else
+				$this->controllerDipatcher($resource);
+
         }
     }
 }
