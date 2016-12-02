@@ -9,6 +9,4 @@
 	$router->get('/register', 'RegisterController@get');
 	$router->post('/register', 'RegisterController@post');
 	
-	$router->get('/probando/{:id}',function($args, $app){$app['view']->view('login');});
-	
 ?>
