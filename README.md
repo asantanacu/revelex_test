@@ -3,7 +3,7 @@ Framework test from scratch
 
 #install
 Clone in a PHP server and point the host to public folder.
-Run composer, only to use the autoload for namespaces, external packages no needed.
+Run composer, only to use the autoload for namespaces, no external packages included.
 Import database.sql file in database server
 
 #setup
