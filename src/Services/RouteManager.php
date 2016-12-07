@@ -19,16 +19,16 @@ class RouteManager{
     
     const REGVAL = '/({:.+?})/';    
    
-    public function __construct(array $config){
-        if(empty($config)){
+    public function __construct($config){
+        if(!isset($config['route'])){
             throw new \InvalidArgumentException(
-                'route class requires at least one runtime options'
+                'RouteManager class requires route configuration'
             );
         }
 		
-		if(file_exists($config['path'])){
+		if(file_exists($config['route']['path'])){
                 $router = $this;    
-                require $config['path']; 
+                require $config['route']['path']; 
         }		
     }   
    

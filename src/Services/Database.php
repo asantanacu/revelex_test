@@ -11,17 +11,17 @@ class Database{
 	private $user = "";
 	private $password = "";
     
-    public function __construct($conf){
-        if(empty($conf)){
+    public function __construct($config){
+        if(!isset($config['database'])){
             throw new \InvalidArgumentException(
-                'database class requires at least one runtime options'
+                'Databse class requires database configuration'
             );
         }
         
-        $this->host = $conf['host'];
-		$this->database = $conf['database'];
-		$this->username = $conf['username'];
-		$this->password = $conf['password'];
+        $this->host = $config['database']['host'];
+		$this->database = $config['database']['database'];
+		$this->username = $config['database']['username'];
+		$this->password = $config['database']['password'];
     }
 	
     public function getConnection(){	

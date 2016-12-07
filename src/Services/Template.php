@@ -3,27 +3,25 @@
 namespace Revelex\Services;
 
 class Template{
-    private $app; 
     private $view;
 	private $layout;
 	private $block = []; 
     private $config = [];
-    public function __construct(array $config, $app){
-        if(empty($config)){
+    public function __construct($config){
+        if(!isset($config['view'])){
             throw new \InvalidArgumentException(
-                'template class requires at least one runtime options'
+                'Template class requires view configuration'
             );
         }
         
-        $this->app = $app;
-        $this->config = $config;
+        $this->config = $config['view'];
     }
     public function view($view, array $vars = []){  
-        $app = $this->app;
         if($this->view === null){
             extract($vars, EXTR_SKIP);
            if(file_exists($view = $this->config['path'] . $view . '.php')){
-                 $this->view = $view;      
+                $this->view = $view;
+                global $app;      
                 require $view; 
            }
         
@@ -51,9 +49,9 @@ class Template{
             throw new \Exception; 
         }
         
-        $app = $this->app;
         $this->data = ob_get_contents();
-        ob_end_clean();      
+        ob_end_clean(); 
+        global $app;     
         require $this->layout;
     }	
 }

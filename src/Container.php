@@ -4,10 +4,6 @@ namespace Revelex;
 
 use Revelex\Http\Request;
 use Revelex\Http\Response;
-use Revelex\Services\RouteManager;
-use Revelex\Services\Template;
-use Revelex\Services\Session;
-use Revelex\Services\Database;
 use Revelex\Services\Config;
 
 class Container implements \ArrayAccess{
@@ -20,13 +16,20 @@ class Container implements \ArrayAccess{
             return new Config($conf_file);
         };
 
-        $this['route'] = function() use($app){
-            return new RouteManager($app['config']['route']);
-        };
-		
-        $this['view'] = function() use($app){
-            return new Template($app['config']['view'], $app);	
-        };
+        foreach($this['config']['services'] as $service_name => $service)
+        {
+            $this[$service_name] = function() use($app, $service){
+                $service_class = $service[0];
+                $parameters = [];
+                foreach($service[1] as $parameter){
+                    $parameters[] = $app[$parameter];
+                };
+
+                $r = new \ReflectionClass($service_class); 
+                return $r->newInstanceArgs($parameters); 
+            };
+
+        }
 
         $this['request'] = function() { 
             return new Request($_GET, $_POST, $_FILES, $_SERVER, $_COOKIE);
@@ -34,14 +37,6 @@ class Container implements \ArrayAccess{
 		
         $this['response'] = function() {
            return new Response();
-        };
-		
-        $this['session'] = function(){
-            return new Session();
-        };
-		
-		$this['database'] = function()use($app){
-            return new Database($app['config']['database']);
         };
 
     }

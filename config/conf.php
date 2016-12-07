@@ -18,6 +18,22 @@ $config['database'] = [
    'password'   => ''
 ];
 
+// dependency injection
+$config['services'] = [
+	'route' => [\Revelex\Services\RouteManager::class, 
+				['config']
+	],
+	'view' => [\Revelex\Services\Template::class, 
+				['config']
+	],
+	'session' => [\Revelex\Services\Session::class, 
+				[]
+	],
+	'database' => [\Revelex\Services\Database::class, 
+				['config']
+	]
+];
+
 
 
 
