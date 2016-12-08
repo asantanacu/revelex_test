@@ -103,13 +103,7 @@ class RouteManager{
             }
         }, $resource);
        
-        $regUri = explode('/', $resource); 
-       
-        $args = array_diff(
-                    array_replace($regUri, 
-                    explode('/', $requestUri)
-                ), $regUri
-            );  
+        $args = array_diff_assoc(explode('/', $requestUri) ,explode('/', $resource));  
         return [array_values($args), $resource, $route]; 
     }
 }
